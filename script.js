@@ -112,27 +112,24 @@ function playGame(){
                 updateMove()
                 playGame()
             }else{
-                // check won 
-                    // x won 
-                    if(checkWin(player_X_moves)) {
-                        console.log(`\x1b[32m Player x : ${checkWin(player_X_moves) == true ? 'won' : 'lost'} \x1b[0m`)
+                if(checkWin(player_X_moves)) {
+                    console.log(`\x1b[32m Player x : ${checkWin(player_X_moves) == true ? 'won' : 'lost'} \x1b[0m`)
+                    readInput.close()
+                }else if (checkWin(player_O_moves)){
+                    console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
+                    readInput.close()
+                }else{
+                    if(availableSpots.length === 0) {
+                        console.log(`\x1b[33m Argh!!, the game was draw\x1b[0m`)
                         readInput.close()
-                    }else if (checkWin(player_O_moves)){
-                        console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
-                        readInput.close()
-                    }else{
-                        if(availableSpots.length === 0) {
-                            console.log(`\x1b[33m Argh!!, the game was draw\x1b[0m`)
-                            readInput.close()
-                        }
-                        else {
-                            console.log('stil in game');
-                            showGameBoard()
-                            updateMove()
-                            playGame()
-                        }
                     }
-                    // if draw -> break
+                    else {
+                        console.log('stil in game');
+                        showGameBoard()
+                        updateMove()
+                        playGame()
+                    }
+                }
             }
             
         }
@@ -141,7 +138,9 @@ function playGame(){
 }
 
 
-playGame()
+// playGame()
+
+
 
 
 // confirm  X is a winning move
