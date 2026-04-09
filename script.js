@@ -22,14 +22,14 @@
         // output -> you won
 // resetGame
 }
-
-
 import checkWin from './checkWin.js'
-import readline from  'readline'
                                                   
 const GAME_BOARD  = [[1, 2, 3], 
                      [4, 5, 6], 
                      [7, 8, 9]]
+
+const btns = document.querySelectorAll('.gameboard .slots')
+const playersTurn = document.querySelector('.players-turn')
 
 const availableSpots = [1,2,3,4,5,6,7,8,9]
 
@@ -44,7 +44,6 @@ const showGameBoard = () => {
         console.log(GAME_BOARD[rows])
     }
 }
-
 const play = (position) => {
     let count = 0;
 
@@ -56,92 +55,85 @@ const play = (position) => {
     }
 }
 
+const botPlay = (position) => {
+    
+}
 const updateMove = () => {
     currentMove = currentMove === "X" ? 'O' : 'X'
 }
-
-const readInput = readline.createInterface({
-    input: process.stdin, 
-    output: process.stdout
-})
-
-
-
 const positionIsInvalid = (position) => {
    return ( isNaN(position) || position < 1 || position > 9 )
 }
 
 let totalMoves =  9 - availableSpots.length;
+let gamePosition;
+
 showGameBoard()
-function playGame(){
-    console.log(`AVAILABLE SPOT: [${availableSpots}]`)
-
-    // accept input
-    readInput.question(`choose and available spot and Play ( ${currentMove} ): `, (position) => {
-        position = Number(position)
-
-        if(positionIsInvalid(position)){
-            console.log('\x1b[31m input is invalid\x1b[0m')
-            console.log('Choose from the available spot on the game board')
-            showGameBoard()
-            playGame()
+btns.forEach(btn => {
+    btn.addEventListener('click', () => { 
+        gamePosition = btn.dataset.play
+        if(player_X_won === true || player_O_won === true){
+            return 
         }
-        else if (!availableSpots.includes(position)){
-            console.log(`\x1b[31m That spot has already been taken\x1b[0m`)
-            showGameBoard()
-            playGame()
-        }
-        else{
-            // position is available 
-                // if true - do
-                // else
-            play(position)
-            console.log(position)
-            availableSpots.splice(availableSpots.indexOf(position), 1)
-
-            if(currentMove === 'X') player_X_moves.push(position)
-            else player_O_moves.push(position)
-            console.log(`X: ${player_X_moves} `, `O: ${player_O_moves}`)
-    
-            // totalMoves += 1
-            console.log(`\x1b[32m Move Executed at position ${position} \x1b[0m `)
-
-            // check if the player is likely to start winning
-            if(totalMoves > 5){
-                showGameBoard()
-                updateMove()
-                playGame()
-            }else{
-                if(checkWin(player_X_moves)) {
-                    console.log(`\x1b[32m Player x : ${checkWin(player_X_moves) == true ? 'won' : 'lost'} \x1b[0m`)
-                    readInput.close()
-                }else if (checkWin(player_O_moves)){
-                    console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
-                    readInput.close()
-                }else{
-                    if(availableSpots.length === 0) {
-                        console.log(`\x1b[33m Argh!!, the game was draw\x1b[0m`)
-                        readInput.close()
-                    }
-                    else {
-                        console.log('stil in game');
-                        showGameBoard()
-                        updateMove()
-                        playGame()
-                    }
-                }
-            }
-            
-        }
+        playGame(gamePosition)
     })
 
+})
+
+
+function playGame(position){
+    console.log(`AVAILABLE SPOT: [${availableSpots}]`)
+    position = Number(position)
+
+
+    if (!availableSpots.includes(position)){
+        console.log(`\x1b[31m That spot has already been taken\x1b[0m`)
+        showGameBoard()
+        return
+    }
+    else{
+        play(position)
+        console.log(position)
+        availableSpots.splice(availableSpots.indexOf(position), 1)
+
+        if(currentMove === 'X') player_X_moves.push(position)
+        else player_O_moves.push(position)
+        console.log(`X: ${player_X_moves} `, `O: ${player_O_moves}`)
+
+        console.log(`\x1b[32m Move Executed at position ${position} \x1b[0m `)
+        for(let btn of btns){
+            if(btn.dataset.play == position){
+                btn.querySelector('h1').innerHTML = currentMove
+            }
+        }
+
+        if(totalMoves > 5){
+            showGameBoard()
+            updateMove()
+        }else{
+            if(checkWin(player_X_moves)) {
+                player_X_won = true
+                showGameBoard()
+                playersTurn.innerHTML = `Player X WON`
+                console.log(`\x1b[32m Player x : ${checkWin(player_X_moves) == true ? 'won' : 'lost'} \x1b[0m`)
+                return
+            }else if (checkWin(player_O_moves)){
+                player_O_won = true
+                showGameBoard()
+                playersTurn.innerHTML = `Player O WON`
+                console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
+
+                return
+            }else{
+                if(availableSpots.length === 0) {
+                    console.log(`\x1b[33m Argh!!, the game was draw\x1b[0m`)
+                }
+                else {
+                    showGameBoard()
+                    updateMove()
+                    playersTurn.innerHTML = `${currentMove} TURN`
+                }
+            }
+        }
+    }
 }
-
-
-// playGame()
-
-
-
-
-// confirm  X is a winning move
-// X: 1,3,9,6  O: 5,2,4

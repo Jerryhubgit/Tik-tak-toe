@@ -4,10 +4,10 @@ const WINNING_MOVES  = [[1,2,3], [4,5,6], [7,8,9],
 
 
 
-
 const moves = [1,0,9,5]
 
-// loop through array 
+//{ 
+    // loop through array 
 // select a row
 // select an item from the moves
 // check if the move is the winning list
@@ -19,8 +19,9 @@ const moves = [1,0,9,5]
                 // break;
     // else continue
 
+//}
+   
 
-    
 export default function checkWin(moves){
     let searchCount = 0
     let playerWon = false;
@@ -51,7 +52,5 @@ export default function checkWin(moves){
 
 
 }
-
-
 
 

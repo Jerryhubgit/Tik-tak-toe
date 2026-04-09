@@ -62,10 +62,16 @@
         .gameboard .slots{
             border: 1px solid rgba(0,0,0,.1);
             background-color: hsl(0, 0%, 90%);
-            padding: 18px 30px;
+            /* padding: 18px 30px; */
+            width: 100px;
+            height: 100px;
             border-radius: 20px;
             cursor: pointer;
             box-shadow: 0 5px 0 rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
     </style>
 </head>
@@ -79,32 +85,32 @@
             <div class="refresh">refresh</div>
         </div>
         <div class="gameboard">
-            <div class="slots">
-                <h1>X</h1>
-            </div>
-            <div class="slots">
+            <div class="slots" data-play="1">
                 <h1></h1>
             </div>
-            <div class="slots">
-                <h1>X</h1>
+            <div class="slots" data-play="2">
+                <h1></h1>
             </div>
-            <div class="slots">
-                <h1>X</h1>
+            <div class="slots" data-play="3">
+                <h1></h1>
             </div>
-            <div class="slots">
-                <h1>X</h1>
+            <div class="slots" data-play="4">
+                <h1></h1>
             </div>
-            <div class="slots">
-                <h1>O</h1>
+            <div class="slots" data-play="5">
+                <h1></h1>
             </div>
-            <div class="slots">
-                <h1>X</h1>
+            <div class="slots" data-play="6">
+                <h1></h1>
             </div>
-            <div class="slots">
-                <h1>O</h1>
+            <div class="slots" data-play="7">
+                <h1></h1>
             </div>
-            <div class="slots">
-                <h1>X</h1>
+            <div class="slots" data-play="8">
+                <h1></h1>
+            </div>
+            <div class="slots" data-play="9">
+                <h1></h1>
             </div>
         </div>
     </div>
