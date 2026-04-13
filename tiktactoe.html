@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
     <style>
         *{
@@ -12,19 +13,19 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body{
-            background-color: hsl(0,0%,90%);
+            background-color: hsl(0,0%,10%);
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         .tiktactoe{
-            background-color: white;
+            background-color: hsl(0,0%,15%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             /* max-width: 500px; */
             /* width: 90%; */
             place-items: center;
             padding: 20px;
-            border: 1px solid rgba(0,0,0,.2);
             border-radius: 10px;
         }
         .header{
@@ -49,7 +50,7 @@
             border: 1px solid rgba(0,0,0,.3);
             padding: 10px 20px;
             border-radius: 10px;
-            background-color: hsl(295, 100%, 70%);
+            background-color: hsl(113, 98%, 15%);
             border: 1px solid rgba(0,0,0,.05);
             color: white;
             font-weight: bold;
@@ -60,18 +61,20 @@
             gap: 1rem;
         }
         .gameboard .slots{
-            border: 1px solid rgba(0,0,0,.1);
-            background-color: hsl(0, 0%, 90%);
+            background-color: hsl(0,0%,20%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             /* padding: 18px 30px; */
             width: 100px;
             height: 100px;
             border-radius: 20px;
             cursor: pointer;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+        }
+        .slots h1{
+            color: white;
         }
     </style>
 </head>
@@ -82,7 +85,9 @@
         <div class="header">
             <div class="space">space</div>
             <div class="players-turn">X TURN </div>
-            <div class="refresh">refresh</div>
+            <div class="refresh">
+                <i class="fa-solid fa-arrow-rotate-right"></i>
+            </div>
         </div>
         <div class="gameboard">
             <div class="slots" data-play="1">

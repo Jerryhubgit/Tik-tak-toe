@@ -55,9 +55,6 @@ const play = (position) => {
     }
 }
 
-const botPlay = (position) => {
-    
-}
 const updateMove = () => {
     currentMove = currentMove === "X" ? 'O' : 'X'
 }
@@ -69,20 +66,13 @@ let totalMoves =  9 - availableSpots.length;
 let gamePosition;
 
 showGameBoard()
-btns.forEach(btn => {
-    btn.addEventListener('click', () => { 
-        gamePosition = btn.dataset.play
-        if(player_X_won === true || player_O_won === true){
-            return 
-        }
-        playGame(gamePosition)
-    })
-
-})
 
 
+// else check if position is available
+
+
+// console.log(`AVAILABLE SPOT: [${availableSpots}]`)
 function playGame(position){
-    console.log(`AVAILABLE SPOT: [${availableSpots}]`)
     position = Number(position)
 
 
@@ -93,7 +83,7 @@ function playGame(position){
     }
     else{
         play(position)
-        console.log(position)
+        // remove played spot
         availableSpots.splice(availableSpots.indexOf(position), 1)
 
         if(currentMove === 'X') player_X_moves.push(position)
@@ -122,11 +112,11 @@ function playGame(position){
                 showGameBoard()
                 playersTurn.innerHTML = `Player O WON`
                 console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
-
                 return
             }else{
                 if(availableSpots.length === 0) {
                     console.log(`\x1b[33m Argh!!, the game was draw\x1b[0m`)
+                    playersTurn.innerHTML = 'Argh!!, the game was draw'
                 }
                 else {
                     showGameBoard()
@@ -136,4 +126,36 @@ function playGame(position){
             }
         }
     }
+    console.log(availableSpots)
 }
+
+// play
+// updatemove
+// bot plays
+
+function multiplay(){
+    if(currentMove === 'X'){
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => { 
+                gamePosition = btn.dataset.play
+                if(player_X_won === true || player_O_won === true) return 
+                playGame(gamePosition)
+                console.log(`Here we have the move`)
+                multiplay()
+            })
+        })
+    }else{
+        console.log(`Available spots: ${availableSpots}`, availableSpots.length)
+        let randomSpot = Math.floor(Math.random() * availableSpots.length)
+        setTimeout(() => {
+            playGame(availableSpots[randomSpot])
+        }, 1000)
+     
+    }
+    
+    
+}
+
+
+
+multiplay()
