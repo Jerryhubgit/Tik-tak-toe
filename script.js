@@ -22,8 +22,8 @@
         // output -> you won
 // resetGame
 }
-import checkWin from './checkWin.js'
-                                                  
+import checkWin, { rowWon } from './checkWin.js'
+
 const GAME_BOARD  = [[1, 2, 3], 
                      [4, 5, 6], 
                      [7, 8, 9]]
@@ -106,11 +106,17 @@ function playGame(position){
                 showGameBoard()
                 playersTurn.innerHTML = `Player X WON`
                 console.log(`\x1b[32m Player x : ${checkWin(player_X_moves) == true ? 'won' : 'lost'} \x1b[0m`)
+                btns.forEach(btn => {
+                    if(rowWon(player_X_moves).includes(Number(btn.dataset.play))){
+                        btn.classList.add('won')
+                    }
+                })
                 return
             }else if (checkWin(player_O_moves)){
                 player_O_won = true
                 showGameBoard()
                 playersTurn.innerHTML = `Player O WON`
+
                 console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
                 return
             }else{

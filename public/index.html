@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Socket.io App</h1>
+
+    <input type="text">
+    <button>send</button>
+
+    <ul>
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+
+        const input = document.querySelector('input'); 
+        const button = document.querySelector('button'); 
+        const Messages = document.querySelector('ul');
+
+        function send(message){
+
+            socket.emit('sendMessage', input.value)
+            input.value = ""
+        }
+        button.addEventListener('click', send)
+
+        socket.on('receiveMessage', (data) => {
+            data = `<li> ${data} </li>`
+
+            Messages.innerHTML += data
+        })
+    </script>
+</body>
+</html>

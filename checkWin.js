@@ -48,9 +48,35 @@ export default function checkWin(moves){
         if(count === 3) break;
         if(searchCount === 32) return playerWon
     }
-    
-
-
 }
 
+function rowWon(moves){
+    let searchCount = 0
+    let playerWon = false;
+    for(let rows in WINNING_MOVES){
+    let count = 0;
+    let selectedRow = WINNING_MOVES[rows]
+        for(let columns in moves){
+            searchCount++;
+            let isInWinningList = selectedRow.includes(moves[columns])
+
+            if(isInWinningList){
+                count++
+
+                if(count === 3){
+                    // playerWon = true
+                    return selectedRow
+                }
+            }else {
+                // console.log('\x1b[31m not in winning list \x1b[0m')
+                continue; 
+            } 
+        }
+
+        if(count === 3) break;
+        if(searchCount === 32) return selectedRow
+    }
+}
+
+export { rowWon }
 

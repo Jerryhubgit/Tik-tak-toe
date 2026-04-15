@@ -1,1 +1,2 @@
-bot and animation
+1. bot and animation
+2. what are websockets and how are they different from socketio
