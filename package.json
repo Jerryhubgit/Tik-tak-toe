@@ -4,7 +4,7 @@
   "description": "",
   "main": "backend.js",
   "scripts": {
-    "dev": "nodemon socketio/backend.js"
+    "dev": "nodemon websocket"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/Jerryhubgit/Tik-tak-toe#readme",
   "dependencies": {
+    "ejs": "^5.0.2",
     "express": "^5.2.1",
-    "snowpack": "^3.8.8",
+    "snowpack": "^1.7.1",
     "socket.io": "^4.8.3"
   },
   "devDependencies": {

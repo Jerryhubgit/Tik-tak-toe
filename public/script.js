@@ -83,6 +83,7 @@ function playGame(position){
     }
     else{
         play(position)
+
         // remove played spot
         availableSpots.splice(availableSpots.indexOf(position), 1)
 
@@ -116,7 +117,11 @@ function playGame(position){
                 player_O_won = true
                 showGameBoard()
                 playersTurn.innerHTML = `Player O WON`
-
+                btns.forEach(btn => {
+                    if(rowWon(player_O_moves).includes(Number(btn.dataset.play))){
+                        btn.classList.add('won')
+                    }
+                })
                 console.log(`]\x1b[32m Player O : ${checkWin(player_O_moves) == true ? 'won' : 'lost'} \x1b[0m`)
                 return
             }else{
@@ -139,7 +144,7 @@ function playGame(position){
 // updatemove
 // bot plays
 
-function multiplay(){
+function bot(){
     if(currentMove === 'X'){
         btns.forEach(btn => {
             btn.addEventListener('click', () => { 
@@ -147,7 +152,7 @@ function multiplay(){
                 if(player_X_won === true || player_O_won === true) return 
                 playGame(gamePosition)
                 console.log(`Here we have the move`)
-                multiplay()
+                bot()
             })
         })
     }else{
@@ -158,10 +163,29 @@ function multiplay(){
         }, 1000)
      
     }
-    
-    
 }
 
+// bot()
 
+const socket = io()
+function Multiplayer(){
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => { 
 
-multiplay()
+            // send to server 
+            gamePosition = btn.dataset.play
+            socket.emit('sendMove', gamePosition)
+            // if(player_X_won === true || player_O_won === true) return 
+            // playGame(gamePosition)
+            console.log(`Here we have the move`)
+        })
+    })
+}
+
+Multiplayer()
+
+socket.on('receivedMove', (receivedPosition) => {
+    if(player_X_won === true || player_O_won === true) return 
+    playGame(receivedPosition)
+    console.log(`Here we have the move`)
+})
